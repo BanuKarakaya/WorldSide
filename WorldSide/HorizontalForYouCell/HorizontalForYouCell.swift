@@ -1,0 +1,54 @@
+//
+//  HorizontalForYouCell.swift
+//  WorldSide
+//
+//  Created by Banu Karakaya on 9.10.2025.
+//
+
+import UIKit
+
+final class HorizontalForYouCell: UICollectionViewCell {
+
+    @IBOutlet weak var horizontalForYouCollectionView: UICollectionView!
+    
+    private lazy var viewModel: HorizontalForYouCellViewModelProtocol = HorizontalForYouCellViewModel(delegate: self)
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        viewModel.awakeFromNib()
+    }
+}
+
+extension HorizontalForYouCell: UICollectionViewDelegate {
+    
+}
+
+extension HorizontalForYouCell: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        7
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeCell(cellType: ForYouCell.self, indexPath: indexPath)
+        return cell
+    }
+}
+
+extension HorizontalForYouCell: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        .init(width: 200, height: 210)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        .init(top: 0, left: 10, bottom: 0, right: 10)
+    }
+}
+
+extension HorizontalForYouCell: HorizontalForYouCellViewModelDelegate {
+    func prepareCollectionView() {
+        horizontalForYouCollectionView.delegate = self
+        horizontalForYouCollectionView.dataSource = self
+        horizontalForYouCollectionView.showsHorizontalScrollIndicator = false
+        horizontalForYouCollectionView.register(cellType: ForYouCell.self)
+    }
+}

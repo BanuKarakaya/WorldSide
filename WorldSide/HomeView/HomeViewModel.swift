@@ -13,6 +13,7 @@ protocol HomeViewModelProtocol {
 
 protocol HomeViewModelDelegate: AnyObject {
     func prepareCollectionView()
+    func prepareUI()
 }
 
 final class HomeViewModel {
@@ -25,6 +26,7 @@ final class HomeViewModel {
 
 extension HomeViewModel: HomeViewModelProtocol {
     func viewDidLoad() {
-        <#code#>
+        delegate?.prepareCollectionView()
+        delegate?.prepareUI()
     }
 }
