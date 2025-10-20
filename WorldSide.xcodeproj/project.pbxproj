@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B1BD07232E9BE2330018737D /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = B1BD07222E9BE2330018737D /* SDWebImage */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		B1BD06412E95421A0018737D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1BD07232E9BE2330018737D /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +130,7 @@
 			);
 			name = WorldSide;
 			packageProductDependencies = (
+				B1BD07222E9BE2330018737D /* SDWebImage */,
 			);
 			productName = WorldSide;
 			productReference = B1BD062A2E9542190018737D /* WorldSide.app */;
@@ -208,6 +214,9 @@
 			);
 			mainGroup = B1BD06212E9542190018737D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B1BD07212E9BE2330018737D /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B1BD062B2E9542190018737D /* Products */;
 			projectDirPath = "";
@@ -571,6 +580,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B1BD07212E9BE2330018737D /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B1BD07222E9BE2330018737D /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1BD07212E9BE2330018737D /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B1BD06222E9542190018737D /* Project object */;
 }

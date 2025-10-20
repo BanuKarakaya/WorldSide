@@ -30,6 +30,8 @@ extension HorizontalCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeCell(cellType: BigNewsCell.self, indexPath: indexPath)
+        let new = viewModel.newsAtIndex(index: indexPath.item)
+        
         return cell
     }
 }
@@ -45,6 +47,7 @@ extension HorizontalCell: UICollectionViewDelegateFlowLayout {
 }
 
 extension HorizontalCell: HorizontalCellViewModelDelegate {
+    
     func prepareCollectionView() {
         horizontalCollectionView.delegate = self
         horizontalCollectionView.showsHorizontalScrollIndicator = false

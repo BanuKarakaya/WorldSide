@@ -101,7 +101,11 @@
             </constraints>
             <size key="customSize" width="373" height="110"/>
             <connections>
+                <outlet property="newsDate" destination="PH5-m6-5kx" id="dt1-VK-vg1"/>
                 <outlet property="newsImage" destination="lqI-0E-Tul" id="Sqm-oG-iqb"/>
+                <outlet property="newsSourceImage" destination="lqq-DP-a7Z" id="Ao6-4g-R37"/>
+                <outlet property="newsSourceName" destination="0Vb-MX-8j7" id="nZH-fF-Zv7"/>
+                <outlet property="newsTitle" destination="zpw-nx-dv5" id="llR-nE-9TS"/>
             </connections>
             <point key="canvasLocation" x="139.69465648854961" y="33.802816901408455"/>
         </collectionViewCell>

@@ -46,6 +46,8 @@ extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
             let cell = collectionView.dequeCell(cellType: HorizontalCell.self, indexPath: indexPath)
+            let cellViewModel = HorizontalCellViewModel(delegate: cell)
+            cellViewModel.configureCell(horizontalNews: viewModel.horizontalNews)
             return cell
         } else if  indexPath.section == 1 {
             let cell = collectionView.dequeCell(cellType: HorizontalForYouCell.self, indexPath: indexPath)
@@ -77,6 +79,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension HomeViewController: HomeViewModelDelegate {
+    func reloadData() {
+        newsCollectionView.reloadData()
+    }
+    
     func prepareUI() {
         self.title = "News"
         let textAttributes = [NSAttributedString.Key.foregroundColor: color]

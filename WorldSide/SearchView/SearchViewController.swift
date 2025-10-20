@@ -30,6 +30,9 @@ extension SearchViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeCell(cellType: NewsCell.self, indexPath: indexPath)
+        let new = viewModel.newsAtIndex(index: indexPath.item)
+        let cellViewModel = NewsCellViewModel(delegate: cell, new: new)
+        cell.viewModel = cellViewModel
         return cell
     }
 }
@@ -59,6 +62,10 @@ extension SearchViewController: UISearchBarDelegate {
 }
 
 extension SearchViewController: SearchViewModelDelegate {
+    func reloadData() {
+        searchCollectionView.reloadData()
+    }
+    
     func prepareSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.hidesNavigationBarDuringPresentation = true
