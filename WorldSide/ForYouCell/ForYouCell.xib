@@ -20,7 +20,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MWm-Tx-xZ9">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="210"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lalaland" translatesAutoresizingMaskIntoConstraints="NO" id="BWK-jq-FCa">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="resim-yok" translatesAutoresizingMaskIntoConstraints="NO" id="BWK-jq-FCa">
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="119"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="119" id="Uha-XL-hwx"/>
@@ -35,7 +35,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cnn" translatesAutoresizingMaskIntoConstraints="NO" id="xJE-on-t65">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Source" translatesAutoresizingMaskIntoConstraints="NO" id="xJE-on-t65">
                                 <rect key="frame" x="0.0" y="173" width="28" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="28" id="3aF-Sf-QOD"/>
@@ -101,14 +101,17 @@
             <size key="customSize" width="200" height="210"/>
             <connections>
                 <outlet property="newImage" destination="BWK-jq-FCa" id="3uz-sf-ugV"/>
+                <outlet property="newTitle" destination="gtV-kv-UI5" id="kRW-ez-9xS"/>
+                <outlet property="publishedTime" destination="0Jf-px-VoK" id="tKh-Ms-OGn"/>
+                <outlet property="sourceName" destination="SQK-EV-1YI" id="HCt-Zh-2w1"/>
             </connections>
             <point key="canvasLocation" x="167.93893129770993" y="76.056338028169023"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="Source" width="40" height="40"/>
         <image name="clock" catalog="system" width="128" height="123"/>
-        <image name="cnn" width="1200" height="1201"/>
-        <image name="lalaland" width="356" height="512"/>
+        <image name="resim-yok" width="1200" height="1200"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

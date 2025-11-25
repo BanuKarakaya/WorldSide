@@ -37,8 +37,10 @@ extension NewsCell: NewsCellViewModelDelegate {
         newsImage.layer.cornerRadius = 10
     }
     
-    func configureCell(new: Datum?) {
-        prepareBannerImage(with: new?.image)
+    func configureCell(new: Article?) {
+        prepareBannerImage(with: new?.urlToImage)
         newsTitle.text = new?.title
+        newsSourceName.text = new?.source.name
+        newsDate.text = new?.publishedAt
     }
 }

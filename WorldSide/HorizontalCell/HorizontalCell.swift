@@ -11,11 +11,10 @@ final class HorizontalCell: UICollectionViewCell {
 
     @IBOutlet weak var horizontalCollectionView: UICollectionView!
     
-    private lazy var viewModel: HorizontalCellViewModelProtocol = HorizontalCellViewModel(delegate: self)
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        viewModel.awakeFromNib()
+    var viewModel: HorizontalCellViewModelProtocol! {
+        didSet {
+            viewModel.awakeFromNib()
+        }
     }
 }
 
@@ -31,6 +30,8 @@ extension HorizontalCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeCell(cellType: BigNewsCell.self, indexPath: indexPath)
         let new = viewModel.newsAtIndex(index: indexPath.item)
+        let cellViewModel = BigNewsCellViewModel(delegate: cell, new: new)
+        cell.viewModel = cellViewModel
         
         return cell
     }
@@ -47,6 +48,13 @@ extension HorizontalCell: UICollectionViewDelegateFlowLayout {
 }
 
 extension HorizontalCell: HorizontalCellViewModelDelegate {
+    func setAccessabilityLabel() {
+        accessibilityIdentifier = "MyFirstSection"
+    }
+    
+    func reloadData() {
+        horizontalCollectionView.reloadData()
+    }
     
     func prepareCollectionView() {
         horizontalCollectionView.delegate = self

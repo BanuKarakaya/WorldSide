@@ -1,34 +1,34 @@
 //
-//  NewsCellViewModel.swift
+//  ForYouCellViewModel.swift
 //  WorldSide
 //
-//  Created by Banu Karakaya on 12.10.2025.
+//  Created by Banu Karakaya on 24.10.2025.
 //
 
 import Foundation
 
-protocol NewsCellViewModelProtocol {
+protocol ForYouCellViewModelProtocol {
     func load()
     func awakeFromNib()
 }
 
-protocol NewsCellViewModelDelegate: AnyObject {
+protocol ForYouCellViewModelDelegate: AnyObject {
     func configureCell(new: Article?)
     func setUI()
     func prepareBannerImage(with urlString: String?)
 }
 
-final class NewsCellViewModel {
-    private weak var delegate: NewsCellViewModelDelegate?
+final class ForYouCellViewModel {
+    private weak var delegate: ForYouCellViewModelDelegate?
     private var new: Article?
     
-    init(delegate: NewsCellViewModelDelegate?, new: Article?) {
+    init(delegate: ForYouCellViewModelDelegate?, new: Article?) {
         self.delegate = delegate
         self.new = new
     }
 }
 
-extension NewsCellViewModel: NewsCellViewModelProtocol {
+extension ForYouCellViewModel: ForYouCellViewModelProtocol {
     func load() {
         if let new = new {
             delegate?.configureCell(new: new)

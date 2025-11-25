@@ -22,7 +22,9 @@ final class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelectItemAt(index: indexPath.item)
+    }
 }
 
 extension HomeViewController: UICollectionViewDataSource {
@@ -47,13 +49,26 @@ extension HomeViewController: UICollectionViewDataSource {
         if indexPath.section == 0 {
             let cell = collectionView.dequeCell(cellType: HorizontalCell.self, indexPath: indexPath)
             let cellViewModel = HorizontalCellViewModel(delegate: cell)
-            cellViewModel.configureCell(horizontalNews: viewModel.horizontalNews)
+            cell.viewModel = cellViewModel
+            if let horizontalNews = viewModel.horizontalNews {
+                cellViewModel.configureCell(horizontalNews: horizontalNews)
+            }
+            
             return cell
         } else if  indexPath.section == 1 {
             let cell = collectionView.dequeCell(cellType: HorizontalForYouCell.self, indexPath: indexPath)
+            let cellViewModel = HorizontalForYouCellViewModel(delegate: cell)
+            cell.viewModel = cellViewModel
+            if let horizontalNews = viewModel.forYouNews {
+                cellViewModel.configureCell(horizontalNews: horizontalNews)
+            }
+        
             return cell
         } else {
             let cell = collectionView.dequeCell(cellType: NewsCell.self, indexPath: indexPath)
+            let new = viewModel.newsAtIndex(index: indexPath.item)
+            let cellViewModel = NewsCellViewModel(delegate: cell, new: new)
+            cell.viewModel = cellViewModel
             return cell
         }
     }
@@ -79,6 +94,14 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension HomeViewController: HomeViewModelDelegate {
+    func navigateToDetailVC(selectedCell: Article?) {
+        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+                navigationController?.pushViewController(detailVC, animated: true)
+                let detailViewModel = DetailViewModel(delegate: detailVC)
+                detailVC.viewModel = detailViewModel
+                detailViewModel.selectedNew = selectedCell
+    }
+    
     func reloadData() {
         newsCollectionView.reloadData()
     }

@@ -9,21 +9,41 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    @IBOutlet weak var sourceName: UILabel!
+    @IBOutlet weak var newTitle: UILabel!
+    @IBOutlet weak var authorName: UILabel!
+    @IBOutlet weak var newDate: UILabel!
+    @IBOutlet weak var newImage: UIImageView!
+    @IBOutlet weak var newContent: UILabel!
+    
+    
+    lazy var viewModel: DetailViewModelProtocol = DetailViewModel(delegate: self)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.viewDidLoad()
+    }
+}
 
-        // Do any additional setup after loading the view.
+extension DetailViewController: DetailViewModelDelegate {
+    func configure(selectedNew: Article?) {
+        sourceName.text = selectedNew?.source.name
+        newTitle.text = selectedNew?.title
+        authorName.text = selectedNew?.author
+        newDate.text = selectedNew?.publishedAt
+        newContent.text = selectedNew?.content
+        prepareBannerImage(with: selectedNew?.urlToImage)
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func prepareBannerImage(with urlString: String?) {
+        if let imageUrlString = urlString, let url = URL(string:imageUrlString){
+            newImage.sd_setImage(with: url)
+        }
     }
-    */
+    
+    func prepareUI() {
+        print("banu")
+    }
 
 }

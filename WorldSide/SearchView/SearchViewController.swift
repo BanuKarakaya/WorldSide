@@ -20,7 +20,9 @@ final class SearchViewController: UIViewController {
 }
 
 extension SearchViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelectItemAt(index: indexPath.item)
+    }
 }
 
 extension SearchViewController: UICollectionViewDataSource {
@@ -53,15 +55,23 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
  
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("arıyo")
+        viewModel.searchBarSearchButtonClicked(searchText: searchBar.text)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        print("aramayı iptal ettik ayol")
+        viewModel.searchBarCancelButtonClicked()
     }
 }
 
 extension SearchViewController: SearchViewModelDelegate {
+    func navigateToDetailVC(selectedCell: Article?) {
+        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        navigationController?.pushViewController(detailVC, animated: true)
+        let detailViewModel = DetailViewModel(delegate: detailVC)
+        detailVC.viewModel = detailViewModel
+        detailViewModel.selectedNew = selectedCell
+    }
+    
     func reloadData() {
         searchCollectionView.reloadData()
     }

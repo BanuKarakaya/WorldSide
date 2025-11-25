@@ -34,6 +34,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B1A818F52EAA5AED0044F3BD /* Exceptions for "WorldSideUITests" folder in "WorldSideUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				WorldSideSearchViewUITest.swift,
+			);
+			target = B1BD06492E95421A0018737D /* WorldSideUITests */;
+		};
+		B1A818F62EAA6DCC0044F3BD /* Exceptions for "WorldSideUITests" folder in "WorldSideTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				WorldSideSearchViewUITest.swift,
+			);
+			target = B1BD063F2E95421A0018737D /* WorldSideTests */;
+		};
 		B1BD06522E95421A0018737D /* Exceptions for "WorldSide" folder in "WorldSide" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -44,6 +58,15 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		B1A818EF2EAA5ABA0044F3BD /* WorldSideUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B1A818F62EAA6DCC0044F3BD /* Exceptions for "WorldSideUITests" folder in "WorldSideTests" target */,
+				B1A818F52EAA5AED0044F3BD /* Exceptions for "WorldSideUITests" folder in "WorldSideUITests" target */,
+			);
+			path = WorldSideUITests;
+			sourceTree = "<group>";
+		};
 		B1BD062C2E9542190018737D /* WorldSide */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -55,11 +78,6 @@
 		B1BD06432E95421A0018737D /* WorldSideTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = WorldSideTests;
-			sourceTree = "<group>";
-		};
-		B1BD064D2E95421A0018737D /* WorldSideUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = WorldSideUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -94,8 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				B1BD062C2E9542190018737D /* WorldSide */,
+				B1A818EF2EAA5ABA0044F3BD /* WorldSideUITests */,
 				B1BD06432E95421A0018737D /* WorldSideTests */,
-				B1BD064D2E95421A0018737D /* WorldSideUITests */,
 				B1BD062B2E9542190018737D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -150,11 +168,10 @@
 				B1BD06422E95421A0018737D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				B1A818EF2EAA5ABA0044F3BD /* WorldSideUITests */,
 				B1BD06432E95421A0018737D /* WorldSideTests */,
 			);
 			name = WorldSideTests;
-			packageProductDependencies = (
-			);
 			productName = WorldSideTests;
 			productReference = B1BD06402E95421A0018737D /* WorldSideTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -172,12 +189,7 @@
 			dependencies = (
 				B1BD064C2E95421A0018737D /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				B1BD064D2E95421A0018737D /* WorldSideUITests */,
-			);
 			name = WorldSideUITests;
-			packageProductDependencies = (
-			);
 			productName = WorldSideUITests;
 			productReference = B1BD064A2E95421A0018737D /* WorldSideUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -201,6 +213,7 @@
 					};
 					B1BD06492E95421A0018737D = {
 						CreatedOnToolsVersion = 16.4;
+						LastSwiftMigration = 1640;
 						TestTargetID = B1BD06292E9542190018737D;
 					};
 				};
@@ -509,6 +522,7 @@
 		B1BD065C2E95421A0018737D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = A5Y9WBD7WV;
@@ -517,6 +531,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.banu.WorldSideUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = WorldSide;
@@ -526,6 +541,7 @@
 		B1BD065D2E95421A0018737D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = A5Y9WBD7WV;

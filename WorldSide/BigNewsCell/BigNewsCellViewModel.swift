@@ -1,34 +1,34 @@
 //
-//  NewsCellViewModel.swift
+//  BigNewsCellViewModel.swift
 //  WorldSide
 //
-//  Created by Banu Karakaya on 12.10.2025.
+//  Created by Banu Karakaya on 22.10.2025.
 //
 
 import Foundation
 
-protocol NewsCellViewModelProtocol {
+protocol BigNewsCellViewModelProtocol {
     func load()
     func awakeFromNib()
 }
 
-protocol NewsCellViewModelDelegate: AnyObject {
+protocol BigNewsCellViewModelDelegate: AnyObject {
     func configureCell(new: Article?)
     func setUI()
     func prepareBannerImage(with urlString: String?)
 }
 
-final class NewsCellViewModel {
-    private weak var delegate: NewsCellViewModelDelegate?
+final class BigNewsCellViewModel {
+    private weak var delegate: BigNewsCellViewModelDelegate?
     private var new: Article?
     
-    init(delegate: NewsCellViewModelDelegate?, new: Article?) {
+    init(delegate: BigNewsCellViewModelDelegate?, new: Article?) {
         self.delegate = delegate
         self.new = new
     }
 }
 
-extension NewsCellViewModel: NewsCellViewModelProtocol {
+extension BigNewsCellViewModel: BigNewsCellViewModelProtocol {
     func load() {
         if let new = new {
             delegate?.configureCell(new: new)

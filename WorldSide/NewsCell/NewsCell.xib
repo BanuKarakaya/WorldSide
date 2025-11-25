@@ -20,7 +20,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plY-hS-f3N">
                         <rect key="frame" x="0.0" y="0.0" width="373" height="110"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lalaland" translatesAutoresizingMaskIntoConstraints="NO" id="lqI-0E-Tul">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="resim-yok" translatesAutoresizingMaskIntoConstraints="NO" id="lqI-0E-Tul">
                                 <rect key="frame" x="6" y="11" width="104" height="89"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="104" id="egJ-6T-mpQ"/>
@@ -35,7 +35,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cnn" translatesAutoresizingMaskIntoConstraints="NO" id="lqq-DP-a7Z">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Source" translatesAutoresizingMaskIntoConstraints="NO" id="lqq-DP-a7Z">
                                 <rect key="frame" x="118" y="65" width="25" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="BSB-kf-zmj"/>
@@ -111,9 +111,9 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="Source" width="40" height="40"/>
         <image name="clock" catalog="system" width="128" height="123"/>
-        <image name="cnn" width="1200" height="1201"/>
-        <image name="lalaland" width="356" height="512"/>
+        <image name="resim-yok" width="1200" height="1200"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

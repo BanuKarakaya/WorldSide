@@ -1,8 +1,8 @@
 //
 //  NetworkManager.swift
-//  Movie App
+//  WorldLens
 //
-//  Created by Banu Karakaya on 15.09.2025.
+//  Created by Banu on 19.06.2025.
 //
 
 import Foundation
@@ -10,18 +10,20 @@ import Foundation
 protocol NetworkManagerInterface {
     func request<T: Decodable> (_ endpoint: Endpoint, completion: @escaping (Swift.Result  <T, Error>) -> Void) -> Void
     
-    func getNews(completion: @escaping (Swift.Result<Response , Error>) -> Void) -> Void
+    func getArticles(completion: @escaping (Swift.Result<Response , Error>) -> Void) -> Void
     
-    func getCnnNews(completion: @escaping (Swift.Result<Response , Error>) -> Void) -> Void
+    func getBreakingNews(completion: @escaping (Swift.Result<Response , Error>) ->Void) -> Void
     
-    func getSearchNews(completion: @escaping (Swift.Result<Response , Error>) ->Void, searchText: String) -> Void
+    func getSearchArticles(completion: @escaping (Swift.Result<Response , Error>) ->Void, searchText: String) -> Void
+    
+    func getCategoriesArticles(completion: @escaping (Swift.Result<Response , Error>) ->Void, categoriesWord: String) -> Void
 }
 
 
 final class NetworkManager: NetworkManagerInterface {
     static let shared = NetworkManager()
     
-    private init() {} //
+    private init() {}
     
     func request<T:Decodable> (_ endpoint : Endpoint, completion : @escaping (Swift.Result  <T, Error>) ->Void) ->Void {
         
@@ -45,20 +47,23 @@ final class NetworkManager: NetworkManagerInterface {
         urlSessionTask.resume()
     }
     
-    func getNews(completion: @escaping (Swift.Result<Response , Error>) ->Void) -> Void {
-        let endpoint = Endpoint.news(query: "access_key=3a600dcd8ea8c2a676f961ba0b6426f3")
+    func getArticles (completion: @escaping (Swift.Result<Response , Error>) ->Void) -> Void {
+        let endpoint = Endpoint.articles(query: "&apiKey=3981648866734d75902b4b10fc53ff32")
         request(endpoint, completion: completion)
     }
     
-    func getCnnNews(completion: @escaping (Swift.Result<Response , Error>) ->Void) -> Void {
-        let endpoint = Endpoint.cnnNews(query: "access_key=3a600dcd8ea8c2a676f961ba0b6426f3")
+    func getBreakingNews (completion: @escaping (Swift.Result<Response , Error>) ->Void) -> Void {
+        let endpoint = Endpoint.articles(query: "&apiKey=3981648866734d75902b4b10fc53ff32")
         request(endpoint, completion: completion)
     }
     
-    func getSearchNews (completion: @escaping (Swift.Result<Response , Error>) ->Void, searchText: String) -> Void {
-        let endpoint = Endpoint.searchNews(searchText: searchText)
+    func getSearchArticles (completion: @escaping (Swift.Result<Response , Error>) ->Void, searchText: String) -> Void {
+        let endpoint = Endpoint.searchArticles(searchText: searchText)
+        request(endpoint, completion: completion)
+    }
+    
+    func getCategoriesArticles  (completion: @escaping (Swift.Result<Response , Error>) ->Void, categoriesWord: String) -> Void {
+        let endpoint = Endpoint.categoriesArticles(selectedCategories: categoriesWord)
         request(endpoint, completion: completion)
     }
 }
-
-

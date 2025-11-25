@@ -1,46 +1,26 @@
 
-
 import Foundation
 
-// MARK: - Welcome
-struct Response: Codable {
-    let pagination: Pagination
-    let data: [Datum]
+// MARK: - Response
+struct Response: Decodable {
+    let status: String
+    let totalResults: Int
+    let articles: [Article]
 }
 
-// MARK: - Datum
-struct Datum: Codable {
-    let author: String?
-    let title, description: String
-    let url: String
+// MARK: - Article
+struct Article: Decodable {
     let source: Source
-    let image: String?
-    let category: Category
-    let language, country: Country
-    let publishedAt: Date
-
-    enum CodingKeys: String, CodingKey {
-        case author, title, description, url, source, image, category, language, country
-        case publishedAt = "published_at"
-    }
+    let author: String?
+    let title, description: String?
+    let url: String?
+    let urlToImage: String?
+    let publishedAt: String?
+    let content: String?
 }
 
-enum Category: String, Codable {
-    case general = "general"
+// MARK: - Source
+struct Source: Decodable {
+    let id: String?
+    let name: String
 }
-
-enum Country: String, Codable {
-    case es = "es"
-    case it = "it"
-}
-
-enum Source: String, Codable {
-    case laopiniondezamora = "laopiniondezamora"
-    case zazoom = "zazoom"
-}
-
-// MARK: - Pagination
-struct Pagination: Codable {
-    let limit, offset, count, total: Int
-}
-

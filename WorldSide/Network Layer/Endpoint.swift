@@ -7,10 +7,13 @@
 
 import Foundation
 
+import Foundation
+
 enum Endpoint {
-    case news(query: String)
-    case cnnNews(query: String)
-    case searchNews(searchText: String)
+    case articles(query: String)
+    case breakingNews(query: String)
+    case searchArticles(searchText: String)
+    case categoriesArticles(selectedCategories: String)
 }
 
 enum HttpMethod: String {
@@ -25,17 +28,19 @@ protocol EndpointProtocol {
 
 extension Endpoint: EndpointProtocol {
     var baseUrl: String {
-        "https://api.mediastack.com/v1/"
+        "https://newsapi.org/v2/"
     }
     
     var path: String {
         switch self {
-        case .news(let query):
-            return "news?\(query)"
-        case .cnnNews(let query):
-            return "news?\(query)&sources=cnn"
-        case .searchNews(let searchText):
-            return "sources?access_key=3a600dcd8ea8c2a676f961ba0b6426f3&search=\(searchText)"
+        case .articles(let query):
+            return "everything?q=keyword\(query)"
+        case .breakingNews(let query):
+            return "top-headlines?country=us\(query)"
+        case .searchArticles(let searchText):
+            return "top-headlines?q=\(searchText)&apiKey=3981648866734d75902b4b10fc53ff32"
+        case .categoriesArticles(let selectedCategories):
+            return "top-headlines?category=\(selectedCategories)&apiKey=3981648866734d75902b4b10fc53ff32"
         }
     }
     
