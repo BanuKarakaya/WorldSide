@@ -19,25 +19,25 @@ jobs:
           xcode-version: '16.4'
 
       - name: Build (Simulator)
-  run: |
-    set -eo pipefail
-    LOG=build.log
-    xcodebuild \
-      -project "$(
-        find "$GITHUB_WORKSPACE" -maxdepth 3 -name '*.xcodeproj' | head -n1
-      )" \
-      -scheme WorldSide \
-      -configuration Debug \
-      -destination "platform=iOS Simulator,name=iPhone 16 Pro" \
-      CODE_SIGNING_ALLOWED=NO \
-      clean build \
-      | tee "$LOG"
-    echo "---- compiler errors ----"
-    grep -nE ": (error|warning): " "$LOG" || true
+        run: |
+          set -eo pipefail
+          LOG=build.log
+          xcodebuild \
+            -project "$(
+              find "$GITHUB_WORKSPACE" -maxdepth 3 -name '*.xcodeproj' | head -n1
+            )" \
+            -scheme WorldSide \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,name=iPhone 16 Pro" \
+            CODE_SIGNING_ALLOWED=NO \
+            clean build \
+            | tee "$LOG"
+          echo "---- compiler errors ----"
+          grep -nE ": (error|warning): " "$LOG" || true
 
-- name: Upload build log
-  if: failure()
-  uses: actions/upload-artifact@v4
-  with:
-    name: xcodebuild-build-log
-    path: build.log
+      - name: Upload build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcodebuild-build-log
+          path: build.log
