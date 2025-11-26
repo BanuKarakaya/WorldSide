@@ -1,4 +1,24 @@
-- name: Build (Simulator)
+name: iOS – Xcode build & test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Xcode Setup
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '16.4'
+
+      - name: Build (Simulator)
   run: |
     set -eo pipefail
     LOG=build.log
