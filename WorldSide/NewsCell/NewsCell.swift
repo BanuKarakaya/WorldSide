@@ -21,6 +21,8 @@ final class NewsCell: UICollectionViewCell {
         didSet {
             viewModel.awakeFromNib()
             viewModel.load()
+            newsTitle.accessibilityIdentifier = "news_cell_title"
+            newsSourceName.accessibilityIdentifier = "news_cell_source"
         }
     }
 }

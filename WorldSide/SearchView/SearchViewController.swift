@@ -16,6 +16,8 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.viewDidLoad()
+        searchCollectionView.accessibilityIdentifier = "news_collectionView"
+        tabBarItem.accessibilityIdentifier = "tab_search"
     }
 }
 
@@ -85,6 +87,7 @@ extension SearchViewController: SearchViewModelDelegate {
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .tintColor
         
         searchController.searchBar.delegate = self
+        searchController.searchBar.accessibilityIdentifier = "news_searchBar"
     }
     
     func prepareCollectionView() {

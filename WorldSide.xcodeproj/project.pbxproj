@@ -112,8 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				B1BD062C2E9542190018737D /* WorldSide */,
-				B1A818EF2EAA5ABA0044F3BD /* WorldSideUITests */,
 				B1BD06432E95421A0018737D /* WorldSideTests */,
+				B1A818EF2EAA5ABA0044F3BD /* WorldSideUITests */,
 				B1BD062B2E9542190018737D /* Products */,
 			);
 			sourceTree = "<group>";

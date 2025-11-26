@@ -22,6 +22,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.viewDidLoad()
+        newTitle.accessibilityIdentifier = "detail_title"
+
     }
 }
 
