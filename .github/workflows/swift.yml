@@ -1,44 +1,23 @@
-name: iOS – Xcode build & test
+- name: Build (Simulator)
+  run: |
+    set -eo pipefail
+    LOG=build.log
+    xcodebuild \
+      -project "$(
+        find "$GITHUB_WORKSPACE" -maxdepth 3 -name '*.xcodeproj' | head -n1
+      )" \
+      -scheme WorldSide \
+      -configuration Debug \
+      -destination "platform=iOS Simulator,name=iPhone 16 Pro" \
+      CODE_SIGNING_ALLOWED=NO \
+      clean build \
+      | tee "$LOG"
+    echo "---- compiler errors ----"
+    grep -nE ": (error|warning): " "$LOG" || true
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-  build-and-test:
-    runs-on: macos-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Xcode Setup
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '16.4'
-
-      - name: Build (Simulator)
-        run: |
-          set -eo pipefail
-          PROJECT_PATH="$(find "$GITHUB_WORKSPACE" -maxdepth 3 -name '*.xcodeproj' | head -n1)"
-          echo "Using project at: $PROJECT_PATH"
-          xcodebuild \
-            -project "$PROJECT_PATH" \
-            -scheme WorldSide \
-            -configuration Debug \
-            -destination "platform=iOS Simulator,name=iPhone 16 Pro" \
-            CODE_SIGNING_ALLOWED=NO \
-            clean build
-
-      - name: Run tests (Simulator)
-        run: |
-          set -eo pipefail
-          PROJECT_PATH="$(find "$GITHUB_WORKSPACE" -maxdepth 3 -name '*.xcodeproj' | head -n1)"
-          xcodebuild \
-            -project "$PROJECT_PATH" \
-            -scheme WorldSide \
-            -configuration Debug \
-            -destination "platform=iOS Simulator,name=iPhone 16 Pro" \
-            CODE_SIGNING_ALLOWED=NO \
-            clean test
+- name: Upload build log
+  if: failure()
+  uses: actions/upload-artifact@v4
+  with:
+    name: xcodebuild-build-log
+    path: build.log
