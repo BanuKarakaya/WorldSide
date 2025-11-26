@@ -16,14 +16,15 @@ jobs:
       - name: Xcode Setup
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '16.4'   # lokalde hangisini kullanıyorsan onu yaz
+          xcode-version: '16.4'
 
       - name: Build (Simulator)
-        working-directory: WorldSide
         run: |
           set -eo pipefail
+          PROJECT_PATH="$(find "$GITHUB_WORKSPACE" -maxdepth 3 -name '*.xcodeproj' | head -n1)"
+          echo "Using project at: $PROJECT_PATH"
           xcodebuild \
-            -project WorldSide.xcodeproj \
+            -project "$PROJECT_PATH" \
             -scheme WorldSide \
             -configuration Debug \
             -destination "platform=iOS Simulator,name=iPhone 16 Pro" \
@@ -31,11 +32,11 @@ jobs:
             clean build
 
       - name: Run tests (Simulator)
-        working-directory: WorldSide
         run: |
           set -eo pipefail
+          PROJECT_PATH="$(find "$GITHUB_WORKSPACE" -maxdepth 3 -name '*.xcodeproj' | head -n1)"
           xcodebuild \
-            -project WorldSide.xcodeproj \
+            -project "$PROJECT_PATH" \
             -scheme WorldSide \
             -configuration Debug \
             -destination "platform=iOS Simulator,name=iPhone 16 Pro" \
