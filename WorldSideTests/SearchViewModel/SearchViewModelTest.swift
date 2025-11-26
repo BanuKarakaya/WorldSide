@@ -86,9 +86,4 @@ final class SearchViewModelTest: XCTestCase {
         XCTAssertTrue(view.invokedNavigateToDetailVC)
         XCTAssertEqual(view.selectedCellValue?.title, selectedCell.title)
     }
-    
-    func test_newsAtIndex_returnsElementAtIndex_whenNotSearching() {
-        viewModel.isSearching = false
-        
-    }
 }
