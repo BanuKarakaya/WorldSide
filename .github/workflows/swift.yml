@@ -12,33 +12,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Xcode Setup
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '16.4'   # lokalde hangisini kullanıyorsan onu yaz
-
-      - name: Build (Simulator)
-        working-directory: WorldSide
-        run: |
-          set -eo pipefail
-          xcodebuild \
-            -project WorldSide.xcodeproj \
-            -scheme WorldSide \
-            -configuration Debug \
-            -destination "platform=iOS Simulator,name=iPhone 16 Pro" \
-            CODE_SIGNING_ALLOWED=NO \
-            clean build
-
-      - name: Run tests (Simulator)
-        working-directory: WorldSide
-        run: |
-          set -eo pipefail
-          xcodebuild \
-            -project WorldSide.xcodeproj \
-            -scheme WorldSide \
-            -configuration Debug \
-            -destination "platform=iOS Simulator,name=iPhone 16 Pro" \
-            CODE_SIGNING_ALLOWED=NO \
-            clean test
+    - name: Build
+      run: swift build -v #'run' keyword executes the command, as if it's run in terminal
+      # step 3, verbosely test the package using the `swift` CLI
+    - name: Run tests
+      run: swift test -v #'run' keyword executes the command, as if it's run in terminal
 
