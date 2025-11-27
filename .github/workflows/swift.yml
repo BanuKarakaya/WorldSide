@@ -9,6 +9,12 @@ on:
 jobs:
   build-and-test:
     runs-on: macos-latest
+    env:
+      SCHEME: WorldSide
+      PROJECT_PATH: ${{ github.workspace }}
+      DEVICE_NAME: "iPhone 16 Pro"
+      UNIT_TEST_TARGET: "WorldSideTests"    
+      UI_TEST_TARGET: "WorldSideUITests"      
 
     steps:
       - uses: actions/checkout@v4
@@ -18,17 +24,35 @@ jobs:
         with:
           xcode-version: '16.4'
 
+      - name: Resolve Project (.xcodeproj)
+        id: proj
+        run: |
+          set -eo pipefail
+          PROJ="$(find "$GITHUB_WORKSPACE" -maxdepth 3 -name '*.xcodeproj' | head -n1)"
+          if [[ -z "$PROJ" ]]; then
+            echo "No .xcodeproj found!" >&2
+            exit 1
+          fi
+          echo "project_path=$PROJ" >> "$GITHUB_OUTPUT"
+
+      - name: List available Simulators (debug aid)
+        run: xcrun simctl list devices available
+
+      - name: Boot simulator
+        run: |
+          set -eo pipefail
+          xcrun simctl boot "${DEVICE_NAME}" || true
+          xcrun simctl bootstatus "${DEVICE_NAME}" -b
+
       - name: Build (Simulator)
         run: |
           set -eo pipefail
           LOG=build.log
           xcodebuild \
-            -project "$(
-              find "$GITHUB_WORKSPACE" -maxdepth 3 -name '*.xcodeproj' | head -n1
-            )" \
-            -scheme WorldSide \
+            -project "${{ steps.proj.outputs.project_path }}" \
+            -scheme "${SCHEME}" \
             -configuration Debug \
-            -destination "platform=iOS Simulator,name=iPhone 16 Pro" \
+            -destination "platform=iOS Simulator,name=${DEVICE_NAME}" \
             CODE_SIGNING_ALLOWED=NO \
             clean build \
             | tee "$LOG"
@@ -41,3 +65,63 @@ jobs:
         with:
           name: xcodebuild-build-log
           path: build.log
+
+      - name: Run Unit Tests
+        run: |
+          set -eo pipefail
+          LOG=unit-tests.log
+          xcodebuild \
+            -project "${{ steps.proj.outputs.project_path }}" \
+            -scheme "${SCHEME}" \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,name=${DEVICE_NAME}" \
+            -enableCodeCoverage YES \
+            -resultBundlePath UnitTests.xcresult \
+            -only-testing:"${UNIT_TEST_TARGET}" \
+            test | tee "$LOG"
+          echo "---- unit test errors/warnings ----"
+          grep -nE ": (error|warning): " "$LOG" || true
+
+      - name: Upload Unit Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: UnitTests.xcresult
+          path: UnitTests.xcresult
+
+      - name: Upload Unit Test Log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-tests-log
+          path: unit-tests.log
+
+      - name: Run UI Tests
+        run: |
+          set -eo pipefail
+          LOG=ui-tests.log
+          xcodebuild \
+            -project "${{ steps.proj.outputs.project_path }}" \
+            -scheme "${SCHEME}" \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,name=${DEVICE_NAME}" \
+            -enableCodeCoverage NO \
+            -resultBundlePath UITests.xcresult \
+            -only-testing:"${UI_TEST_TARGET}" \
+            test | tee "$LOG"
+          echo "---- ui test errors/warnings ----"
+          grep -nE ": (error|warning): " "$LOG" || true
+
+      - name: Upload UI Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: UITests.xcresult
+          path: UITests.xcresult
+
+      - name: Upload UI Test Log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-tests-log
+          path: ui-tests.log
