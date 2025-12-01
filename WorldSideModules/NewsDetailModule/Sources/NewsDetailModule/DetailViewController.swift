@@ -17,7 +17,7 @@ public final class DetailViewController: UIViewController {
     @IBOutlet weak var newDate: UILabel!
     @IBOutlet weak var newImage: UIImageView!
     @IBOutlet weak var newContent: UILabel!
-    
+    @IBOutlet weak var scrollView: UIScrollView!
     
     public lazy var viewModel: DetailViewModelProtocol = DetailViewModel(delegate: self)
     
@@ -25,7 +25,6 @@ public final class DetailViewController: UIViewController {
         super.viewDidLoad()
         viewModel.viewDidLoad()
         newTitle.accessibilityIdentifier = "detail_title"
-
     }
 }
 
@@ -47,9 +46,8 @@ extension DetailViewController: DetailViewModelDelegate {
     }
     
     public func prepareUI() {
-        print("banu")
+        scrollView.showsVerticalScrollIndicator = false
     }
-
 }
 
 public enum NewsDetailFactory {

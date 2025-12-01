@@ -16,9 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="npX-M3-cOr">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="npX-M3-cOr">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eL8-d4-ZCu">
                                         <rect key="frame" x="0.0" y="118" width="393" height="666"/>
@@ -135,6 +134,12 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="j3v-c6-CD4"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="npX-M3-cOr" firstAttribute="bottom" secondItem="ZVz-G0-AFs" secondAttribute="bottom" id="container-bottom"/>
+                            <constraint firstItem="npX-M3-cOr" firstAttribute="leading" secondItem="ZVz-G0-AFs" secondAttribute="leading" id="container-leading"/>
+                            <constraint firstItem="npX-M3-cOr" firstAttribute="top" secondItem="ZVz-G0-AFs" secondAttribute="top" id="container-top"/>
+                            <constraint firstItem="npX-M3-cOr" firstAttribute="trailing" secondItem="ZVz-G0-AFs" secondAttribute="trailing" id="container-trailing"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="1DF-uZ-f2c"/>
                     <connections>
@@ -143,6 +148,7 @@
                         <outlet property="newDate" destination="Ec0-vX-1Zu" id="bXS-c5-HZO"/>
                         <outlet property="newImage" destination="9Dm-Xc-zbg" id="UEB-jI-hez"/>
                         <outlet property="newTitle" destination="gNJ-aY-Bff" id="qYG-Bp-UwX"/>
+                        <outlet property="scrollView" destination="eL8-d4-ZCu" id="9LM-oz-T3u"/>
                         <outlet property="sourceName" destination="qe3-rc-Xtx" id="bp1-CZ-L6A"/>
                     </connections>
                 </viewController>

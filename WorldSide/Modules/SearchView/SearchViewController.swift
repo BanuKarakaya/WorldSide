@@ -70,7 +70,7 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController: SearchViewModelDelegate {
     func navigateToDetailVC(selectedCell: Article?) {
-        let detailVC = UIStoryboard(name: "NewsDetail", bundle: .init(identifier: "com.banu.NewsDetailModule")).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        let detailVC = NewsDetailFactory.makeDetailViewController()
         navigationController?.pushViewController(detailVC, animated: true)
         let detailViewModel = DetailViewModel(delegate: detailVC)
         detailVC.viewModel = detailViewModel
