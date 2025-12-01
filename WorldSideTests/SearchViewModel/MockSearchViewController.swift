@@ -8,8 +8,17 @@
 @testable import WorldSide
 import CommonModule
 
-
 final class MockSearchViewController: SearchViewModelDelegate {
+    
+    var invokedshowAlert = false
+    var showAlertTitle: String?
+    var showAlertmessage: String?
+    func showAlert(title: String?, message: String?) {
+        invokedshowAlert = true
+        showAlertTitle = title
+        showAlertmessage = message
+    }
+    
     var invokedPrepareUI = false
     func prepareUI() {
         invokedPrepareUI = true

@@ -12,7 +12,6 @@ import CommonModule
 
 final class MockNetworkManager: NetworkManagerInterface {
     func request<T>(_ endpoint: NetworkLayer.Endpoint, completion: @escaping (Result<T, NetworkLayer.NetworkErrors>) -> Void) where T : Decodable {
-        <#code#>
     }
     
     var shouldSuccessCompletionInGetArticles = false
