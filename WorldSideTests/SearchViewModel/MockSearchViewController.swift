@@ -6,6 +6,8 @@
 //
 
 @testable import WorldSide
+import CommonModule
+
 
 final class MockSearchViewController: SearchViewModelDelegate {
    
@@ -25,8 +27,8 @@ final class MockSearchViewController: SearchViewModelDelegate {
     }
     
     var invokedNavigateToDetailVC = false
-    var selectedCellValue: WorldSide.Article?
-    func navigateToDetailVC(selectedCell: WorldSide.Article?) {
+    var selectedCellValue: Article?
+    func navigateToDetailVC(selectedCell: Article?) {
         invokedNavigateToDetailVC = true
         selectedCellValue = selectedCell
     }

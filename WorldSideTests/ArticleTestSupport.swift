@@ -7,6 +7,7 @@
 
 import Foundation
 @testable import WorldSide
+import CommonModule
 
 extension Article {
    

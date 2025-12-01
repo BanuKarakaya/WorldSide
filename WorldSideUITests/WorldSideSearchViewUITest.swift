@@ -18,12 +18,13 @@ final class WorldSideSearchViewUITest: XCTestCase {
         }
   
     func test_SearchFlow() {
-        sleep(1)
+        sleep(5)
         print(app.debugDescription)
         
         // 1) Search tabına git
-        app.tabBars.buttons["tab_search"].tap()
-        
+        print("latifff \(app.tabs.debugDescription)")
+        print("latifff \(app.tabBars.debugDescription)")
+        app.tabs.otherElements["tab_search"].tap()
         // 2) Search bar var mı?
         let searchBar = app.searchFields["news_searchBar"]
         XCTAssertTrue(searchBar.waitForExistence(timeout: 3), "Search bar görünmüyor")

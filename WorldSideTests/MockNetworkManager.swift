@@ -7,16 +7,18 @@
 
 import Foundation
 @testable import WorldSide
+import NetworkLayer
+import CommonModule
 
 final class MockNetworkManager: NetworkManagerInterface {
-    func request<T>(_ endpoint: WorldSide.Endpoint, completion: @escaping (Result<T, any Error>) -> Void) where T : Decodable {
+    func request<T>(_ endpoint: Endpoint, completion: @escaping (Result<T, any Error>) -> Void) where T : Decodable {
         
     }
     
     var shouldSuccessCompletionInGetArticles = false
     var stubbedResponse: Response!
     var invokedFetchNews = false
-    func getArticles(completion: @escaping (Result<WorldSide.Response, any Error>) -> Void) {
+    func getArticles(completion: @escaping (Result<Response, any Error>) -> Void) {
         invokedFetchNews = true
         if shouldSuccessCompletionInGetArticles {
             completion(.success(stubbedResponse))
@@ -26,15 +28,14 @@ final class MockNetworkManager: NetworkManagerInterface {
     }
     
     var invokedFetchBreakingNews = false
-    func getBreakingNews(completion: @escaping (Result<WorldSide.Response, any Error>) -> Void) {
+    func getBreakingNews(completion: @escaping (Result<Response, any Error>) -> Void) {
         invokedFetchBreakingNews = true
     }
     
     var shouldSuccessCompletionInGetSearchArticles = false
     var stubbedSearchResponse: Response!
     var invokedSearchNews = false
-    var searchText: String!
-    func getSearchArticles(completion: @escaping (Result<WorldSide.Response, any Error>) -> Void, searchText: String) {
+    func getSearchArticles(completion: @escaping (Result<Response, any Error>) -> Void, searchText: String) {
       invokedSearchNews = true
         if shouldSuccessCompletionInGetSearchArticles {
             completion(.success(stubbedSearchResponse))
@@ -43,11 +44,9 @@ final class MockNetworkManager: NetworkManagerInterface {
         }
     }
     
-    func getCategoriesArticles(completion: @escaping (Result<WorldSide.Response, any Error>) -> Void, categoriesWord: String) {
+    func getCategoriesArticles(completion: @escaping (Result<Response, any Error>) -> Void, categoriesWord: String) {
         
     }
-    
-    
 }
 
 extension Response {

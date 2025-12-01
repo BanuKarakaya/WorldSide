@@ -7,6 +7,8 @@
 
 import XCTest
 @testable import WorldSide
+import NetworkLayer
+import CommonModule
 
 final class SearchViewModelTest: XCTestCase {
     private var viewModel: SearchViewModel!
@@ -51,6 +53,10 @@ final class SearchViewModelTest: XCTestCase {
         XCTAssertTrue(view.invokedReloadData)
     }
     
+    func test_searchBarSearchButtonClicked_searchTextIsNil_Returns() {
+        
+    }
+    
     func test_searchBarSearchButtonClicked_InvokedRequiredMethod() {
         
     }
@@ -85,5 +91,17 @@ final class SearchViewModelTest: XCTestCase {
         
         XCTAssertTrue(view.invokedNavigateToDetailVC)
         XCTAssertEqual(view.selectedCellValue?.title, selectedCell.title)
+    }
+    
+    func test_newsAtIndex_isSearchingIsTrue_returnsSearchArray() {
+        
+    }
+    
+    func test_newsAtIndex_isSearchingIsFalse_returnsNewsArray() {
+        let selectedCell: Article = Article.stub(title: "A1")
+        networkManager.shouldSuccessCompletionInGetSearchArticles = true
+        networkManager.stubbedSearchResponse = Response.init(status: "", totalResults: 0, articles: [selectedCell])
+        viewModel.fetchSearchArticles(searchedText: "banu")
+        XCTAssertEqual(viewModel.newsAtIndex(index: 0)?.title, selectedCell.title)
     }
 }
