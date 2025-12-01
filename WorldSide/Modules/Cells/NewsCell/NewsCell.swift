@@ -17,7 +17,6 @@ final class NewsCell: UICollectionViewCell {
     @IBOutlet weak var newsSourceName: UILabel!
     @IBOutlet weak var newsDate: UILabel!
     
-
     var viewModel: NewsCellViewModelProtocol! {
         didSet {
             viewModel.awakeFromNib()
@@ -29,7 +28,6 @@ final class NewsCell: UICollectionViewCell {
 }
 
 extension NewsCell: NewsCellViewModelDelegate {
-    
     func prepareBannerImage(with urlString: String?) {
         if let imageUrlString = urlString, let url = URL(string:imageUrlString){
             newsImage.sd_setImage(with: url)

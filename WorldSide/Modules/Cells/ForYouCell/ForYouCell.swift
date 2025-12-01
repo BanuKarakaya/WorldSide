@@ -15,7 +15,6 @@ final class ForYouCell: UICollectionViewCell {
     @IBOutlet weak var sourceName: UILabel!
     @IBOutlet weak var publishedTime: UILabel!
     
-    
     var viewModel: ForYouCellViewModelProtocol! {
         didSet {
             viewModel.awakeFromNib()

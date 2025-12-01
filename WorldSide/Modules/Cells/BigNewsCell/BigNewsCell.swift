@@ -8,7 +8,7 @@
 import UIKit
 import CommonModule
 
-class BigNewsCell: UICollectionViewCell {
+final class BigNewsCell: UICollectionViewCell {
     
     @IBOutlet weak var newImage: UIImageView!
     @IBOutlet weak var newTitle: UILabel!
@@ -22,7 +22,6 @@ class BigNewsCell: UICollectionViewCell {
 }
 
 extension BigNewsCell: BigNewsCellViewModelDelegate {
-   
     func prepareBannerImage(with urlString: String?) {
         if let imageUrlString = urlString, let url = URL(string:imageUrlString){
             newImage.sd_setImage(with: url)

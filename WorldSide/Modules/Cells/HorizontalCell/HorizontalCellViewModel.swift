@@ -9,6 +9,7 @@ import Foundation
 import CommonModule
 
 protocol HorizontalCellViewModelProtocol {
+    var numberOfItems: Int { get }
     func awakeFromNib()
     func configureCell(horizontalNews: [Article])
     func newsAtIndex(index: Int) -> Article?
@@ -38,6 +39,10 @@ final class HorizontalCellViewModel {
 }
 
 extension HorizontalCellViewModel: HorizontalCellViewModelProtocol {
+    var numberOfItems: Int {
+        return 10
+    }
+    
     func newsAtIndex(index: Int) -> Article? {
         if let new = horizontalNews?[index] {
             return new

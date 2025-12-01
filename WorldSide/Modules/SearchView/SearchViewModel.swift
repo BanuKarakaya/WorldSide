@@ -10,6 +10,8 @@ import CommonModule
 import NetworkLayer
 
 protocol SearchViewModelProtocol {
+    var numberOfItems: Int { get }
+    
     func viewDidLoad()
     func newsAtIndex(index: Int) -> Article?
     func searchBarCancelButtonClicked()
@@ -72,6 +74,10 @@ final class SearchViewModel {
 }
 
 extension SearchViewModel: SearchViewModelProtocol {
+    var numberOfItems: Int {
+        return (isSearching ? searchNews?.count : news?.count)  ?? .zero
+    }
+    
     func didSelectItemAt(index: Int) {
         var selectedCell: Article?
         

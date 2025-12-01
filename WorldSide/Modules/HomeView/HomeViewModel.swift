@@ -14,10 +14,12 @@ protocol HomeViewModelProtocol {
     var navigationForYouDelegate: HorizontalForYouCellViewModelNavigationDelegate { get }
     var horizontalNews: [Article]? { get }
     var forYouNews: [Article]? { get }
+    var numberOfSections: Int { get }
     
     func viewDidLoad()
     func newsAtIndex(index: Int) -> Article?
     func didSelectItemAt(index: Int)
+    func numberOfItems(section: Int) -> Int
 }
 
 protocol HomeViewModelDelegate: AnyObject {
@@ -93,6 +95,22 @@ final class HomeViewModel {
 }
 
 extension HomeViewModel: HomeViewModelProtocol {
+    func numberOfItems(section: Int) -> Int {
+        if section == 0 {
+            return 1
+        } else if section == 1 {
+            return 1
+        } else if section == 2 {
+            return 10
+        } else {
+            return 0
+        }
+    }
+    
+    var numberOfSections: Int {
+        3
+    }
+    
     var navigationForYouDelegate: HorizontalForYouCellViewModelNavigationDelegate {
         self
     }
@@ -132,7 +150,6 @@ extension HomeViewModel: HomeViewModelProtocol {
             fetchSearchArticles(searchedText: "Trump")
             fetchCategoriesArticles(categoriesWord: "Entertainment")
             fetchNews()
-            
         }
     }
 }
