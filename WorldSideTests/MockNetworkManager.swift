@@ -21,9 +21,13 @@ final class MockNetworkManager: NetworkManagerInterface {
     func getArticles(completion: @escaping (Result<Response, any Error>) -> Void) {
         invokedFetchNews = true
         if shouldSuccessCompletionInGetArticles {
-            completion(.success(stubbedResponse))
+            if let response = stubbedResponse {
+                completion(.success(response))
+            } else {
+                completion(.failure(MockError.nilStubbedResponse))
+            }
         } else {
-         // failure case
+            completion(.failure(MockError.failed))
         }
     }
     
@@ -36,11 +40,15 @@ final class MockNetworkManager: NetworkManagerInterface {
     var stubbedSearchResponse: Response!
     var invokedSearchNews = false
     func getSearchArticles(completion: @escaping (Result<Response, any Error>) -> Void, searchText: String) {
-      invokedSearchNews = true
+        invokedSearchNews = true
         if shouldSuccessCompletionInGetSearchArticles {
-            completion(.success(stubbedSearchResponse))
+            if let response = stubbedSearchResponse {
+                completion(.success(response))
+            } else {
+                completion(.failure(MockError.nilStubbedResponse))
+            }
         } else {
-            // failure case
+            completion(.failure(MockError.failed))
         }
     }
     
@@ -58,4 +66,9 @@ extension Response {
         let article = try! JSONDecoder().decode(Response.self, from: data)
         return article
     }
+}
+
+enum MockError: Error {
+    case nilStubbedResponse
+    case failed
 }

@@ -21,8 +21,6 @@ final class SearchViewController: UIViewController {
         searchCollectionView.accessibilityIdentifier = "news_collectionView"
         tabBarItem.accessibilityIdentifier = "tab_search"
         tabBarController?.tabBar.accessibilityIdentifier = "tab_search"
-        print("latif \(tabBarItem.accessibilityIdentifier)")
-        print("latif2 \(tabBarController?.tabBar.accessibilityIdentifier)")
     }
 }
 
