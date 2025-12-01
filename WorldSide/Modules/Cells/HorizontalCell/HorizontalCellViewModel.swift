@@ -10,20 +10,20 @@ import CommonModule
 
 protocol HorizontalCellViewModelProtocol {
     var numberOfItems: Int { get }
-    func awakeFromNib()
+    func load()
     func configureCell(horizontalNews: [Article])
     func newsAtIndex(index: Int) -> Article?
     func didSelectItemAt(indexPath: IndexPath)
 }
 
 protocol HorizontalCellViewModelDelegate: AnyObject {
-   func prepareCollectionView()
-   func reloadData()
-   func setAccessabilityLabel()
+    func prepareCollectionView()
+    func reloadData()
+    func setAccessabilityLabel()
 }
 
 protocol HorizontalCellViewModelNavigationDelegate: AnyObject {
-   func didSelectItemAt(indexPath: IndexPath)
+    func didSelectItemAt(indexPath: IndexPath)
 }
 
 final class HorizontalCellViewModel {
@@ -44,8 +44,8 @@ extension HorizontalCellViewModel: HorizontalCellViewModelProtocol {
     }
     
     func newsAtIndex(index: Int) -> Article? {
-        if let new = horizontalNews?[index] {
-            return new
+        if let news = horizontalNews?[index] {
+            return news
         }
         return nil
     }
@@ -55,7 +55,7 @@ extension HorizontalCellViewModel: HorizontalCellViewModelProtocol {
         delegate?.reloadData()
     }
     
-    func awakeFromNib() {
+    func load() {
         delegate?.prepareCollectionView()
         delegate?.setAccessabilityLabel()
     }

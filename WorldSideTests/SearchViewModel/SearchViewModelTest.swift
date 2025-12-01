@@ -30,20 +30,25 @@ final class SearchViewModelTest: XCTestCase {
         networkManager.shouldSuccessCompletionInGetArticles = true
         XCTAssertFalse(view.invokedPrepareCollectionView)
         XCTAssertFalse(view.invokedPrepareSearchBar)
+        XCTAssertFalse(view.invokedPrepareUI)
         XCTAssertFalse(networkManager.invokedFetchNews)
         viewModel.viewDidLoad()
         XCTAssertTrue(view.invokedPrepareCollectionView)
         XCTAssertTrue(view.invokedPrepareSearchBar)
+        XCTAssertTrue(view.invokedPrepareUI)
         XCTAssertTrue(networkManager.invokedFetchNews)
+        
     }
     
     func test_viewDidLoad_GetNewsCompletionIsFailure_InvokesRequiredMethod() {
         XCTAssertFalse(view.invokedPrepareCollectionView)
         XCTAssertFalse(view.invokedPrepareSearchBar)
+        XCTAssertFalse(view.invokedPrepareUI)
         XCTAssertFalse(networkManager.invokedFetchNews)
         viewModel.viewDidLoad()
         XCTAssertTrue(view.invokedPrepareCollectionView)
         XCTAssertTrue(view.invokedPrepareSearchBar)
+        XCTAssertTrue(view.invokedPrepareUI)
         XCTAssertTrue(networkManager.invokedFetchNews)
     }
     
@@ -55,33 +60,33 @@ final class SearchViewModelTest: XCTestCase {
     
     func test_searchBarSearchButtonClicked_searchTextIsNil_Returns() {
         XCTAssertFalse(view.invokedReloadData)
-            XCTAssertFalse(networkManager.invokedSearchNews)
-            viewModel.isSearching = false
-
-            viewModel.searchBarSearchButtonClicked(searchText: nil)
+        XCTAssertFalse(networkManager.invokedSearchNews)
+        viewModel.isSearching = false
         
-            XCTAssertFalse(view.invokedReloadData)
-            XCTAssertFalse(networkManager.invokedSearchNews)
-            XCTAssertFalse(viewModel.isSearching)
+        viewModel.searchBarSearchButtonClicked(searchText: nil)
+        
+        XCTAssertFalse(view.invokedReloadData)
+        XCTAssertFalse(networkManager.invokedSearchNews)
+        XCTAssertFalse(viewModel.isSearching)
     }
     
     func test_searchBarSearchButtonClicked_InvokedRequiredMethod() {
-            let text = "banu"
-            networkManager.shouldSuccessCompletionInGetSearchArticles = true
-            XCTAssertFalse(view.invokedReloadData)
-            XCTAssertFalse(networkManager.invokedSearchNews)
-            
-            viewModel.searchBarSearchButtonClicked(searchText: text)
-            
-            XCTAssertTrue(viewModel.isSearching)
-            XCTAssertTrue(networkManager.invokedSearchNews)
-            XCTAssertTrue(view.invokedReloadData)
+        let text = "banu"
+        networkManager.shouldSuccessCompletionInGetSearchArticles = true
+        XCTAssertFalse(view.invokedReloadData)
+        XCTAssertFalse(networkManager.invokedSearchNews)
+        
+        viewModel.searchBarSearchButtonClicked(searchText: text)
+        
+        XCTAssertTrue(viewModel.isSearching)
+        XCTAssertTrue(networkManager.invokedSearchNews)
+        XCTAssertTrue(view.invokedReloadData)
     }
     
     func test_didSelectItemAt_usesNewsArray_whenNotSearching() {
         viewModel.isSearching = false
         let selectedCell: Article = Article.stub(title: "A0")
-
+        
         networkManager.shouldSuccessCompletionInGetArticles = true
         networkManager.stubbedResponse = Response.init(status: "", totalResults: 0, articles: [selectedCell])
         viewModel.fetchNews()

@@ -10,33 +10,29 @@ import CommonModule
 
 protocol NewsCellViewModelProtocol {
     func load()
-    func awakeFromNib()
 }
 
 protocol NewsCellViewModelDelegate: AnyObject {
-    func configureCell(new: Article?)
+    func configureCell(news: Article?)
     func setUI()
     func prepareBannerImage(with urlString: String?)
 }
 
 final class NewsCellViewModel {
     private weak var delegate: NewsCellViewModelDelegate?
-    private var new: Article?
+    private var news: Article?
     
-    init(delegate: NewsCellViewModelDelegate?, new: Article?) {
+    init(delegate: NewsCellViewModelDelegate?, news: Article?) {
         self.delegate = delegate
-        self.new = new
+        self.news = news
     }
 }
 
 extension NewsCellViewModel: NewsCellViewModelProtocol {
     func load() {
-        if let new = new {
-            delegate?.configureCell(new: new)
-        }
-    }
-    
-    func awakeFromNib() {
         delegate?.setUI()
+        if let news = news {
+            delegate?.configureCell(news: news)
+        }
     }
 }

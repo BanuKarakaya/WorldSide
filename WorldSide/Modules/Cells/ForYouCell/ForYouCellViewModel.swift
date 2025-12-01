@@ -10,33 +10,29 @@ import CommonModule
 
 protocol ForYouCellViewModelProtocol {
     func load()
-    func awakeFromNib()
 }
 
 protocol ForYouCellViewModelDelegate: AnyObject {
-    func configureCell(new: Article?)
+    func configureCell(news: Article?)
     func setUI()
     func prepareBannerImage(with urlString: String?)
 }
 
 final class ForYouCellViewModel {
     private weak var delegate: ForYouCellViewModelDelegate?
-    private var new: Article?
+    private var news: Article?
     
-    init(delegate: ForYouCellViewModelDelegate?, new: Article?) {
+    init(delegate: ForYouCellViewModelDelegate?, news: Article?) {
         self.delegate = delegate
-        self.new = new
+        self.news = news
     }
 }
 
 extension ForYouCellViewModel: ForYouCellViewModelProtocol {
     func load() {
-        if let new = new {
-            delegate?.configureCell(new: new)
-        }
-    }
-    
-    func awakeFromNib() {
         delegate?.setUI()
+        if let news = news {
+            delegate?.configureCell(news: news)
+        }
     }
 }

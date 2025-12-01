@@ -22,7 +22,7 @@ public final class DetailViewModel {
     private weak var delegate: DetailViewModelDelegate?
     public var selectedNew: Article?
     
-   public init(delegate: DetailViewModelDelegate?) {
+    public init(delegate: DetailViewModelDelegate?) {
         self.delegate = delegate
     }
 }
@@ -30,6 +30,6 @@ public final class DetailViewModel {
 extension DetailViewModel: DetailViewModelProtocol {
     public func viewDidLoad() {
         delegate?.prepareUI()
-        delegate?.configure(selectedNew: selectedNew!)
+        delegate?.configure(selectedNew: selectedNew!) //todo
     }
 }

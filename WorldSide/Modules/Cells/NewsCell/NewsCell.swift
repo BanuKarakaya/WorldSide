@@ -10,7 +10,7 @@ import SDWebImage
 import CommonModule
 
 final class NewsCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var newsImage: UIImageView!
     @IBOutlet weak var newsTitle: UILabel!
     @IBOutlet weak var newsSourceImage: UIImageView!
@@ -19,10 +19,7 @@ final class NewsCell: UICollectionViewCell {
     
     var viewModel: NewsCellViewModelProtocol! {
         didSet {
-            viewModel.awakeFromNib()
             viewModel.load()
-            newsTitle.accessibilityIdentifier = "news_cell_title"
-            newsSourceName.accessibilityIdentifier = "news_cell_source"
         }
     }
 }
@@ -36,12 +33,14 @@ extension NewsCell: NewsCellViewModelDelegate {
     
     func setUI() {
         newsImage.layer.cornerRadius = 10
+        newsTitle.accessibilityIdentifier = "news_cell_title"
+        newsSourceName.accessibilityIdentifier = "news_cell_source"
     }
     
-    func configureCell(new: Article?) {
-        prepareBannerImage(with: new?.urlToImage)
-        newsTitle.text = new?.title
-        newsSourceName.text = new?.source.name
-        newsDate.text = new?.publishedAt
+    func configureCell(news: Article?) {
+        prepareBannerImage(with: news?.urlToImage)
+        newsTitle.text = news?.title
+        newsSourceName.text = news?.source.name
+        newsDate.text = news?.publishedAt
     }
 }

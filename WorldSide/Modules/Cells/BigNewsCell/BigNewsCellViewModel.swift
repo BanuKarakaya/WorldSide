@@ -10,33 +10,29 @@ import CommonModule
 
 protocol BigNewsCellViewModelProtocol {
     func load()
-    func awakeFromNib()
 }
 
 protocol BigNewsCellViewModelDelegate: AnyObject {
-    func configureCell(new: Article?)
+    func configureCell(news: Article?)
     func setUI()
     func prepareBannerImage(with urlString: String?)
 }
 
 final class BigNewsCellViewModel {
     private weak var delegate: BigNewsCellViewModelDelegate?
-    private var new: Article?
+    private var news: Article?
     
-    init(delegate: BigNewsCellViewModelDelegate?, new: Article?) {
+    init(delegate: BigNewsCellViewModelDelegate?, news: Article?) {
         self.delegate = delegate
-        self.new = new
+        self.news = news
     }
 }
 
 extension BigNewsCellViewModel: BigNewsCellViewModelProtocol {
     func load() {
-        if let new = new {
-            delegate?.configureCell(new: new)
-        }
-    }
-    
-    func awakeFromNib() {
         delegate?.setUI()
+        if let news = news {
+            delegate?.configureCell(news: news)
+        }
     }
 }

@@ -10,7 +10,7 @@ import SDWebImage
 import CommonModule
 
 public final class DetailViewController: UIViewController {
-
+    
     @IBOutlet weak var sourceName: UILabel!
     @IBOutlet weak var newTitle: UILabel!
     @IBOutlet weak var authorName: UILabel!

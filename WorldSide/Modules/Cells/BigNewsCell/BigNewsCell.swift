@@ -15,7 +15,6 @@ final class BigNewsCell: UICollectionViewCell {
     
     var viewModel: BigNewsCellViewModelProtocol! {
         didSet {
-            viewModel.awakeFromNib()
             viewModel.load()
         }
     }
@@ -32,8 +31,8 @@ extension BigNewsCell: BigNewsCellViewModelDelegate {
         self.layer.cornerRadius = 10
     }
     
-    func configureCell(new: Article?) {
-        prepareBannerImage(with: new?.urlToImage)
-        newTitle.text = new?.title
+    func configureCell(news: Article?) {
+        prepareBannerImage(with: news?.urlToImage)
+        newTitle.text = news?.title
     }
 }

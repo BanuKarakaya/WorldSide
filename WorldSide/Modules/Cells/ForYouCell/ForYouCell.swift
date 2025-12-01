@@ -9,7 +9,7 @@ import UIKit
 import CommonModule
 
 final class ForYouCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var newImage: UIImageView!
     @IBOutlet weak var newTitle: UILabel!
     @IBOutlet weak var sourceName: UILabel!
@@ -17,7 +17,6 @@ final class ForYouCell: UICollectionViewCell {
     
     var viewModel: ForYouCellViewModelProtocol! {
         didSet {
-            viewModel.awakeFromNib()
             viewModel.load()
         }
     }
@@ -35,10 +34,10 @@ extension ForYouCell: ForYouCellViewModelDelegate {
         newImage.layer.cornerRadius = 10
     }
     
-    func configureCell(new: Article?) {
-        prepareBannerImage(with: new?.urlToImage)
-        newTitle.text = new?.title
-        sourceName.text = new?.source.name
-        publishedTime.text = new?.publishedAt
+    func configureCell(news: Article?) {
+        prepareBannerImage(with: news?.urlToImage)
+        newTitle.text = news?.title
+        sourceName.text = news?.source.name
+        publishedTime.text = news?.publishedAt
     }
 }

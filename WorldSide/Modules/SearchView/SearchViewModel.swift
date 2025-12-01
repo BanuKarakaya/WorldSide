@@ -23,14 +23,16 @@ protocol SearchViewModelDelegate: AnyObject {
     func prepareCollectionView()
     func prepareSearchBar()
     func reloadData()
+    func prepareUI()
     func navigateToDetailVC(selectedCell: Article?)
+    func showAlert(title: String?, message: String?)
 }
 
 final class SearchViewModel {
-   private weak var delegate: SearchViewModelDelegate?
-   private var news: [Article]?
-   private var searchNews: [Article]?
-   var isSearching = false
+    private weak var delegate: SearchViewModelDelegate?
+    private var news: [Article]?
+    private var searchNews: [Article]?
+    var isSearching = false
     private let networkManager: NetworkManagerInterface
     
     init(delegate: SearchViewModelDelegate?, networkManager: NetworkManagerInterface = NetworkManager.shared) {
@@ -39,38 +41,28 @@ final class SearchViewModel {
     }
     
     func fetchNews() {
-        networkManager.getArticles { responseData in
+        networkManager.getArticles { [weak self] responseData in
             switch responseData {
             case .success(let responseData):
-                self.news = responseData.articles
-                DispatchQueue.main.async {
-                    self.delegate?.reloadData()
-                }
-                print(responseData)
-                break
+                self?.news = responseData.articles
+                self?.delegate?.reloadData()
             case .failure(let error):
-                print(error)
-                break
+                self?.delegate?.showAlert(title: error.title, message: error.message)
             }
         }
     }
     
     func fetchSearchArticles(searchedText: String) {
-            networkManager.getSearchArticles(completion: { responseData in
-                switch responseData {
-                case .success(let responseData):
-                    self.searchNews = responseData.articles
-                    DispatchQueue.main.async {
-                        self.delegate?.reloadData()
-                    }
-                    print(responseData)
-                    break
-                case .failure(let error):
-                    print(error)
-                    break
-                }
-            }, searchText: searchedText)
-        }
+        networkManager.getSearchArticles(completion: { [weak self] responseData in
+            switch responseData {
+            case .success(let responseData):
+                self?.searchNews = responseData.articles
+                self?.delegate?.reloadData()
+            case .failure(let error):
+                self?.delegate?.showAlert(title: error.title, message: error.message)
+            }
+        }, searchText: searchedText)
+    }
 }
 
 extension SearchViewModel: SearchViewModelProtocol {
@@ -104,18 +96,19 @@ extension SearchViewModel: SearchViewModelProtocol {
     
     func newsAtIndex(index: Int) -> Article? {
         if isSearching {
-            if let new = searchNews?[index] {
-                return new
+            if let news = searchNews?[index] {
+                return news
             }
         } else {
-            if let new = news?[index] {
-                return new
+            if let news = news?[index] {
+                return news
             }
         }
         return nil
     }
     
     func viewDidLoad() {
+        delegate?.prepareUI()
         delegate?.prepareCollectionView()
         delegate?.prepareSearchBar()
         fetchNews()

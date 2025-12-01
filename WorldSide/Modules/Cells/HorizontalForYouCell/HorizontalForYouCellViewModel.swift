@@ -10,16 +10,16 @@ import CommonModule
 
 protocol HorizontalForYouCellViewModelProtocol {
     var numberOfItems: Int { get }
-    func awakeFromNib()
+    func load()
     func configureCell(horizontalNews: [Article])
     func newsAtIndex(index: Int) -> Article?
     func didSelectItemAt(indexPath: IndexPath)
 }
 
 protocol HorizontalForYouCellViewModelDelegate: AnyObject {
-   func prepareCollectionView()
-   func setAccessabilityLabel()
-   func navigateToDetailVC(selectedCell: Article?)
+    func prepareCollectionView()
+    func reloadData()
+    func setAccessabilityLabel()
 }
 
 protocol HorizontalForYouCellViewModelNavigationDelegate: AnyObject {
@@ -47,17 +47,18 @@ extension HorizontalForYouCellViewModel: HorizontalForYouCellViewModelProtocol {
     }
     
     func newsAtIndex(index: Int) -> Article? {
-        if let new = forYouNews?[index] {
-            return new
+        if let news = forYouNews?[index] {
+            return news
         }
         return nil
     }
     
     func configureCell(horizontalNews: [Article]) {
         self.forYouNews = horizontalNews
+        delegate?.reloadData()
     }
     
-    func awakeFromNib() {
+    func load() {
         delegate?.prepareCollectionView()
         delegate?.setAccessabilityLabel()
     }

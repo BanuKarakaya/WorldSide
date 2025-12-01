@@ -27,10 +27,11 @@ protocol HomeViewModelDelegate: AnyObject {
     func prepareUI()
     func reloadData()
     func navigateToDetailVC(selectedCell: Article?)
+    func showAlert(title: String?, message: String?)
 }
 
 final class HomeViewModel {
-   private weak var delegate: HomeViewModelDelegate?
+    private weak var delegate: HomeViewModelDelegate?
     private let networkManager: NetworkManagerInterface
     var news: [Article]?
     var horizontalNewss: [Article]?
@@ -43,55 +44,42 @@ final class HomeViewModel {
     }
     
     func fetchNews() {
-        networkManager.getArticles { responseData in
+        networkManager.getArticles { [weak self] responseData in
             switch responseData {
             case .success(let responseData):
-                self.news = responseData.articles
+                self?.news = responseData.articles
                 DispatchQueue.main.async {
-                    self.delegate?.reloadData()
+                    self?.delegate?.reloadData()
                 }
-                print(responseData)
-                break
             case .failure(let error):
-                print(error)
-                break
+                self?.delegate?.showAlert(title: error.title, message: error.message)
             }
         }
     }
-
-    func fetchCategoriesArticles(categoriesWord: String) {
-            networkManager.getCategoriesArticles(completion: { responseData in
-                switch responseData {
-                case .success(let responseData):
-                    self.forYouNewss = responseData.articles
-                    DispatchQueue.main.async {
-                        self.delegate?.reloadData()
-                    }
-                    print(responseData)
-                    break
-                case .failure(let error):
-                    print(error)
-                    break
-                }
-            }, categoriesWord: categoriesWord)
-        }
     
-    func fetchSearchArticles(searchedText: String) {
-            networkManager.getSearchArticles(completion: { responseData in
-                switch responseData {
-                case .success(let responseData):
-                    self.horizontalNewss = responseData.articles
-                    DispatchQueue.main.async {
-                        self.delegate?.reloadData()
-                    }
-                    print(responseData)
-                    break
-                case .failure(let error):
-                    print(error)
-                    break
-                }
-            }, searchText: searchedText)
-        }
+    func fetchCategoriesArticles(categoriesWord: String) {
+        networkManager.getCategoriesArticles(completion: { [weak self] responseData in
+            switch responseData {
+            case .success(let responseData):
+                self?.forYouNewss = responseData.articles
+                self?.delegate?.reloadData()
+            case .failure(let error):
+                self?.delegate?.showAlert(title: error.title, message: error.message)
+            }
+        }, categoriesWord: categoriesWord)
+    }
+    
+    func fetchSportsArticles(categoriesWord: String) {
+        networkManager.getCategoriesArticles(completion: { [weak self] responseData in
+            switch responseData {
+            case .success(let responseData):
+                self?.horizontalNewss = responseData.articles
+                self?.delegate?.reloadData()
+            case .failure(let error):
+                self?.delegate?.showAlert(title: error.title, message: error.message)
+            }
+        }, categoriesWord: categoriesWord)
+    }
 }
 
 extension HomeViewModel: HomeViewModelProtocol {
@@ -121,14 +109,14 @@ extension HomeViewModel: HomeViewModelProtocol {
     
     func didSelectItemAt(index: Int) {
         var selectedCell: Article?
-                
+        
         selectedCell = news?[index]
         delegate?.navigateToDetailVC(selectedCell: selectedCell)
     }
     
     func newsAtIndex(index: Int) -> Article? {
-        if let new = news?[index] {
-            return new
+        if let news = news?[index] {
+            return news
         }
         return nil
     }
@@ -145,11 +133,10 @@ extension HomeViewModel: HomeViewModelProtocol {
         delegate?.prepareCollectionView()
         delegate?.prepareUI()
         
-        group.notify(queue: .main) { [self] in
-            print("All processes finished")
-            fetchSearchArticles(searchedText: "Trump")
-            fetchCategoriesArticles(categoriesWord: "Entertainment")
-            fetchNews()
+        group.notify(queue: .main) { [weak self] in
+            self?.fetchSportsArticles(categoriesWord: "Sports")
+            self?.fetchCategoriesArticles(categoriesWord: "Entertainment")
+            self?.fetchNews()
         }
     }
 }
@@ -157,7 +144,7 @@ extension HomeViewModel: HomeViewModelProtocol {
 extension HomeViewModel: HorizontalCellViewModelNavigationDelegate {
     func didSelectItemAt(indexPath: IndexPath) {
         var selectedCell: Article?
-                
+        
         selectedCell = horizontalNewss?[indexPath.item]
         delegate?.navigateToDetailVC(selectedCell: selectedCell)
     }
@@ -166,7 +153,7 @@ extension HomeViewModel: HorizontalCellViewModelNavigationDelegate {
 extension HomeViewModel: HorizontalForYouCellViewModelNavigationDelegate {
     func didSelectItemAtForYouCell(indexPath: IndexPath) {
         var selectedCell: Article?
-                
+        
         selectedCell = forYouNewss?[indexPath.item]
         delegate?.navigateToDetailVC(selectedCell: selectedCell)
     }

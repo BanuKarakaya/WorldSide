@@ -8,12 +8,12 @@
 import UIKit
 
 final class HorizontalCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var horizontalCollectionView: UICollectionView!
     
     var viewModel: HorizontalCellViewModelProtocol! {
         didSet {
-            viewModel.awakeFromNib()
+            viewModel.load()
         }
     }
 }
@@ -31,8 +31,8 @@ extension HorizontalCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeCell(cellType: BigNewsCell.self, indexPath: indexPath)
-        let new = viewModel.newsAtIndex(index: indexPath.item)
-        let cellViewModel = BigNewsCellViewModel(delegate: cell, new: new)
+        let news = viewModel.newsAtIndex(index: indexPath.item)
+        let cellViewModel = BigNewsCellViewModel(delegate: cell, news: news)
         cell.viewModel = cellViewModel
         
         return cell

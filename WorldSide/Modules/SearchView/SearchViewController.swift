@@ -10,7 +10,7 @@ import CommonModule
 import NewsDetailModule
 
 final class SearchViewController: UIViewController {
-
+    
     @IBOutlet weak var searchCollectionView: UICollectionView!
     
     private lazy var viewModel: SearchViewModelProtocol = SearchViewModel(delegate: self)
@@ -18,9 +18,6 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.viewDidLoad()
-        searchCollectionView.accessibilityIdentifier = "news_collectionView"
-        tabBarItem.accessibilityIdentifier = "tab_search"
-        tabBarController?.tabBar.accessibilityIdentifier = "tab_search"
     }
 }
 
@@ -37,8 +34,8 @@ extension SearchViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeCell(cellType: NewsCell.self, indexPath: indexPath)
-        let new = viewModel.newsAtIndex(index: indexPath.item)
-        let cellViewModel = NewsCellViewModel(delegate: cell, new: new)
+        let news = viewModel.newsAtIndex(index: indexPath.item)
+        let cellViewModel = NewsCellViewModel(delegate: cell, news: news)
         cell.viewModel = cellViewModel
         return cell
     }
@@ -57,7 +54,7 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
         0
     }
 }
- 
+
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         viewModel.searchBarSearchButtonClicked(searchText: searchBar.text)
@@ -69,6 +66,12 @@ extension SearchViewController: UISearchBarDelegate {
 }
 
 extension SearchViewController: SearchViewModelDelegate {
+    func prepareUI() {
+        searchCollectionView.accessibilityIdentifier = "news_collectionView"
+        tabBarItem.accessibilityIdentifier = "tab_search"
+        tabBarController?.tabBar.accessibilityIdentifier = "tab_search"
+    }
+    
     func navigateToDetailVC(selectedCell: Article?) {
         let detailVC = NewsDetailFactory.makeDetailViewController()
         navigationController?.pushViewController(detailVC, animated: true)
@@ -97,5 +100,11 @@ extension SearchViewController: SearchViewModelDelegate {
         searchCollectionView.delegate = self
         searchCollectionView.dataSource = self
         searchCollectionView.register(cellType: NewsCell.self)
+    }
+    
+    func showAlert(title: String?, message: String?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(.init(title: "OK", style: .default))
+        present(alert, animated: false)
     }
 }

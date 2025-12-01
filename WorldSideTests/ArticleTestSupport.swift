@@ -10,7 +10,6 @@ import Foundation
 import CommonModule
 
 extension Article {
-   
     static func stub(
         title: String = "Title",
         description: String? = nil,
@@ -27,7 +26,7 @@ extension Article {
         if let description { dict["description"] = description }
         if let url { dict["url"] = url }
         if let urlToImage { dict["urlToImage"] = urlToImage }
-
+        
         let data = try! JSONSerialization.data(withJSONObject: dict, options: [])
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601

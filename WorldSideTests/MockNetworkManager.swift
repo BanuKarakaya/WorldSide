@@ -11,48 +11,48 @@ import NetworkLayer
 import CommonModule
 
 final class MockNetworkManager: NetworkManagerInterface {
-    func request<T>(_ endpoint: Endpoint, completion: @escaping (Result<T, any Error>) -> Void) where T : Decodable {
-        
+    func request<T>(_ endpoint: NetworkLayer.Endpoint, completion: @escaping (Result<T, NetworkLayer.NetworkErrors>) -> Void) where T : Decodable {
+        <#code#>
     }
     
     var shouldSuccessCompletionInGetArticles = false
     var stubbedResponse: Response!
     var invokedFetchNews = false
-    func getArticles(completion: @escaping (Result<Response, any Error>) -> Void) {
+    func getArticles(completion: @escaping (Result<CommonModule.Response, NetworkLayer.NetworkErrors>) -> Void) {
         invokedFetchNews = true
         if shouldSuccessCompletionInGetArticles {
             if let response = stubbedResponse {
                 completion(.success(response))
             } else {
-                completion(.failure(MockError.nilStubbedResponse))
+                completion(.failure(.urlRequestFailed))
             }
         } else {
-            completion(.failure(MockError.failed))
+            completion(.failure(.decodingFailed))
         }
     }
     
     var invokedFetchBreakingNews = false
-    func getBreakingNews(completion: @escaping (Result<Response, any Error>) -> Void) {
+    func getBreakingNews(completion: @escaping (Result<CommonModule.Response, NetworkLayer.NetworkErrors>) -> Void) {
         invokedFetchBreakingNews = true
     }
     
     var shouldSuccessCompletionInGetSearchArticles = false
     var stubbedSearchResponse: Response!
     var invokedSearchNews = false
-    func getSearchArticles(completion: @escaping (Result<Response, any Error>) -> Void, searchText: String) {
+    func getSearchArticles(completion: @escaping (Result<CommonModule.Response, NetworkLayer.NetworkErrors>) -> Void, searchText: String) {
         invokedSearchNews = true
         if shouldSuccessCompletionInGetSearchArticles {
             if let response = stubbedSearchResponse {
                 completion(.success(response))
             } else {
-                completion(.failure(MockError.nilStubbedResponse))
+                completion(.failure(.urlRequestFailed))
             }
         } else {
-            completion(.failure(MockError.failed))
+            completion(.failure(.decodingFailed))
         }
     }
     
-    func getCategoriesArticles(completion: @escaping (Result<Response, any Error>) -> Void, categoriesWord: String) {
+    func getCategoriesArticles(completion: @escaping (Result<CommonModule.Response, NetworkLayer.NetworkErrors>) -> Void, categoriesWord: String) {
         
     }
 }

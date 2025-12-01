@@ -10,10 +10,10 @@ import CommonModule
 import NewsDetailModule
 
 final class HomeViewController: UIViewController {
-
+    
     @IBOutlet weak var newsCollectionView: UICollectionView!
     let color = UIColor(red: 0xE3/255.0, green: 0x51/255.0, blue: 0x3B/255.0, alpha: 1.0)
-
+    
     
     private lazy var viewModel: HomeViewModelProtocol = HomeViewModel(delegate: self)
     
@@ -46,7 +46,6 @@ extension HomeViewController: UICollectionViewDataSource {
             if let horizontalNews = viewModel.horizontalNews {
                 cellViewModel.configureCell(horizontalNews: horizontalNews)
             }
-            
             return cell
         } else if  indexPath.section == 1 {
             let cell = collectionView.dequeCell(cellType: HorizontalForYouCell.self, indexPath: indexPath)
@@ -55,12 +54,11 @@ extension HomeViewController: UICollectionViewDataSource {
             if let horizontalNews = viewModel.forYouNews {
                 cellViewModel.configureCell(horizontalNews: horizontalNews)
             }
-        
             return cell
         } else {
             let cell = collectionView.dequeCell(cellType: NewsCell.self, indexPath: indexPath)
-            let new = viewModel.newsAtIndex(index: indexPath.item)
-            let cellViewModel = NewsCellViewModel(delegate: cell, new: new)
+            let news = viewModel.newsAtIndex(index: indexPath.item)
+            let cellViewModel = NewsCellViewModel(delegate: cell, news: news)
             cell.viewModel = cellViewModel
             return cell
         }
@@ -73,16 +71,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        switch section {
-        case 0:
-            return 0
-        case 1:
-            return 0
-        case 2:
-            return 0
-        default:
-            return 0
-        }
+        0
     }
 }
 
@@ -112,5 +101,11 @@ extension HomeViewController: HomeViewModelDelegate {
         newsCollectionView.register(cellType: HorizontalForYouCell.self)
         newsCollectionView.register(cellType: HorizontalCell.self)
         newsCollectionView.register(cellType: NewsCell.self)
+    }
+    
+    func showAlert(title: String?, message: String?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(.init(title: "OK", style: .default))
+        present(alert, animated: false)
     }
 }

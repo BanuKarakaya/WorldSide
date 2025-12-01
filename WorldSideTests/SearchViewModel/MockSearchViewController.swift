@@ -10,7 +10,11 @@ import CommonModule
 
 
 final class MockSearchViewController: SearchViewModelDelegate {
-   
+    var invokedPrepareUI = false
+    func prepareUI() {
+        invokedPrepareUI = true
+    }
+    
     var invokedPrepareCollectionView = false
     func prepareCollectionView() {
         invokedPrepareCollectionView = true
