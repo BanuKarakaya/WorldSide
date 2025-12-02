@@ -17,6 +17,5 @@ extension UICollectionView {
         guard let cell = dequeueReusableCell(withReuseIdentifier: cellType.identifier, for: indexPath) as? T else {fatalError()}
         return cell
     }
-    
 }
 

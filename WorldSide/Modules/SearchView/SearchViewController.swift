@@ -1,0 +1,110 @@
+//
+//  SearchViewController.swift
+//  WorldSide
+//
+//  Created by Banu Karakaya on 8.10.2025.
+//
+
+import UIKit
+import CommonModule
+import NewsDetailModule
+
+final class SearchViewController: UIViewController {
+    
+    @IBOutlet weak var searchCollectionView: UICollectionView!
+    
+    private lazy var viewModel: SearchViewModelProtocol = SearchViewModel(delegate: self)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel.viewDidLoad()
+    }
+}
+
+extension SearchViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.didSelectItemAt(index: indexPath.item)
+    }
+}
+
+extension SearchViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        viewModel.numberOfItems
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeCell(cellType: NewsCell.self, indexPath: indexPath)
+        let news = viewModel.newsAtIndex(index: indexPath.item)
+        let cellViewModel = NewsCellViewModel(delegate: cell, news: news)
+        cell.viewModel = cellViewModel
+        return cell
+    }
+}
+
+extension SearchViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        .init(top: 10, left: 0, bottom: 10, right: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        0
+    }
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.searchBarSearchButtonClicked(searchText: searchBar.text)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.searchBarCancelButtonClicked()
+    }
+}
+
+extension SearchViewController: SearchViewModelDelegate {
+    func prepareUI() {
+        searchCollectionView.accessibilityIdentifier = "news_collectionView"
+        tabBarItem.accessibilityIdentifier = "tab_search"
+        tabBarController?.tabBar.accessibilityIdentifier = "tab_search"
+    }
+    
+    func navigateToDetailVC(selectedCell: Article?) {
+        let detailVC = NewsDetailFactory.makeDetailViewController()
+        navigationController?.pushViewController(detailVC, animated: true)
+        let detailViewModel = DetailViewModel(delegate: detailVC)
+        detailVC.viewModel = detailViewModel
+        detailViewModel.selectedNew = selectedCell
+    }
+    
+    func reloadData() {
+        searchCollectionView.reloadData()
+    }
+    
+    func prepareSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .tintColor
+        
+        searchController.searchBar.delegate = self
+        searchController.searchBar.accessibilityIdentifier = "news_searchBar"
+    }
+    
+    func prepareCollectionView() {
+        searchCollectionView.delegate = self
+        searchCollectionView.dataSource = self
+        searchCollectionView.register(cellType: NewsCell.self)
+    }
+    
+    func showAlert(title: String?, message: String?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(.init(title: "OK", style: .default))
+        present(alert, animated: false)
+    }
+}

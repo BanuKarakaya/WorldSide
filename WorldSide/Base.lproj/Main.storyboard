@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Kaf-d8-cz2">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -19,7 +20,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="5IC-HI-rTM">
                                 <rect key="frame" x="0.0" y="162" width="393" height="573"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="393" id="pi0-Mg-UDE"/>
                                     <constraint firstAttribute="height" constant="573" id="wfa-zL-naW"/>
@@ -63,13 +64,14 @@
         <!--Tab Bar Controller-->
         <scene sceneID="ze5-zO-EtT">
             <objects>
-                <tabBarController id="Kaf-d8-cz2" sceneMemberID="viewController">
+                <tabBarController modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="Kaf-d8-cz2" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="337-Yp-JSs"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="GLZ-7z-uWz">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" red="0.89019607840000003" green="0.31764705879999999" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.89019607840000003" green="0.31764705879999999" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="selectedImageTintColor" red="0.89019607840000003" green="0.31764705879999999" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
@@ -98,17 +100,16 @@
             </objects>
             <point key="canvasLocation" x="1601" y="475"/>
         </scene>
-        <!--View Controller-->
+        <!--Search View Controller-->
         <scene sceneID="2qn-7Y-3op">
             <objects>
-                <viewController id="dOU-MZ-x4V" sceneMemberID="viewController">
+                <viewController id="dOU-MZ-x4V" customClass="SearchViewController" customModule="WorldSide" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JtB-af-rNf">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HAK-iK-u3A">
                                 <rect key="frame" x="0.0" y="162" width="393" height="573"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="393" id="1Go-Mg-5NO"/>
                                     <constraint firstAttribute="height" constant="573" id="wpB-d4-gjA"/>
@@ -141,6 +142,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Kss-ER-zxc"/>
+                    <connections>
+                        <outlet property="searchCollectionView" destination="HAK-iK-u3A" id="S1V-1O-pFp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WHH-hE-ZyC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
