@@ -13,8 +13,10 @@
   - Built with the **MVVM** (Model-View-ViewModel) pattern to ensure modularity, testability, and a clean structure
 
 ## 🧠 Memory Management
-  -Applied best practices to prevent memory leaks and improve app performance
+  - Applied best practices to prevent memory leaks and improve app performance
 
+## 🌐 Network Optimization
+  - Used DispatchGroup to efficiently manage multiple asynchronous network calls
 
- ## 📄 License
+## 📄 License
   - This project is licensed under the MIT License.
